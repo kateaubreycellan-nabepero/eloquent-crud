@@ -38,3 +38,23 @@ Route::get('/read/{id}', function($id) {
     return $user->roles;
 
 });
+
+Route::get('/update/{id}', function($id) {
+
+    $user = User::findOrFail($id);
+
+    if ($user->has('roles'))
+    {
+        foreach ($user->roles as $role)
+        {
+            if ($role->name == 'Administrators')
+            {
+                $role->name = "Some random role";
+                $result = $role->save();
+                return $result ? true : false;
+            }
+        }
+    }
+    return false;
+
+});
