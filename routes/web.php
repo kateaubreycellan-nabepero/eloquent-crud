@@ -73,3 +73,31 @@ Route::get('/delete/{id}/{role_id}', function($id, $role_id) {
     return false;
 
 });
+
+
+Route::get('/attach/{id}/{role_id}', function($id, $role_id) {
+
+    $user = User::findOrFail($id);
+
+    $result = $user->roles()->attach($role_id);
+    return $result ? true : false;
+
+});
+
+Route::get('/detach/{id}/{role_id}', function($id, $role_id) {
+
+    $user = User::findOrFail($id);
+
+    $result = $user->roles()->detach($role_id);
+    return $result ? true : false;
+
+});
+
+Route::get('/sync/{id}', function($id) {
+
+    $user = User::findOrFail($id);
+
+    $result = $user->roles()->sync([3, 4, 5]);
+    return $result ? true : false;
+
+});
