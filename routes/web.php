@@ -29,3 +29,33 @@ Route::get('/insert/{id}/{addr}', function($id, $addr) {
     return $result ? true : false;
 
 });
+
+Route::get('/update/{id}/{addr}', function($id, $addr) {
+
+    $address = Address::where('user_id', $id)->first();
+    $address->name = $addr;
+    $result = $address->save();
+    return $result ? true : false;
+
+});
+
+Route::get('/read/{id}', function($id) {
+
+    $user = User::findOrfail($id);
+    return "Your address is: ".$user->address->name;
+
+});
+
+Route::get('/delete/{id}', function($id) {
+
+    // Deleting the address through the user
+    $user = User::findOrFail($id);
+    $result = $user->address()->delete();
+
+    // Directly operating on the Address model
+    // $address = Address::where('user_id', $id)->first();
+    // $result = $address->delete();
+
+    return $result ? true : false;
+
+});
