@@ -39,3 +39,11 @@ Route::get('/read/{id}', function($id) {
     // }
 
 });
+
+Route::get('/update/{id}/{post_id}/{title}/{body}', function($id, $post_id, $title, $body) {
+
+    $user = User::findOrFail($id);
+    $result = $user->posts()->where('id', $post_id)->update(['title'=>$title, 'body'=>$body]);
+    return $result ? true : false;
+
+});
