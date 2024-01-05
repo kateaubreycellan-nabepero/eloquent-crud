@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Photo;
+use App\Models\Product;
+use App\Models\Staff;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+function evaluate($result)
+{
+    return $result ? true : false;
+}
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/create/{id}', function($id) {
+
+    $staff = Staff::findOrFail($id);
+    $result = $staff->photos()->create(['path'=>'example.jpg']);
+    return evaluate($result);
+
 });
