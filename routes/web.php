@@ -47,3 +47,11 @@ Route::get('/update/{id}/{post_id}/{title}/{body}', function($id, $post_id, $tit
     return $result ? true : false;
 
 });
+
+Route::get('/delete/{id}/{post_id}', function($id, $post_id) {
+
+    $user = User::findOrFail($id);
+    $result = $user->posts()->where('id', $post_id)->delete();
+    return $result ? true : false;
+
+});
