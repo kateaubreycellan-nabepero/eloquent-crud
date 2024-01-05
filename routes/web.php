@@ -26,10 +26,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/create/{id}', function($id) {
+Route::get('/create/{id}/{photo_name}', function($id, $photo_name) {
 
     $staff = Staff::findOrFail($id);
-    $result = $staff->photos()->create(['path'=>'example.jpg']);
+    $result = $staff->photos()->create(['path'=>$photo_name]);
     return evaluate($result);
 
 });
@@ -61,6 +61,27 @@ Route::get('/delete/{id}/{photo_id}', function($id, $photo_id) {
     $staff = Staff::findOrFail($id);
 
     $result = $staff->photos()->where('id', $photo_id)->delete();
+    return evaluate($result);
+
+});
+
+
+Route::get('/assign/{staff_id}/{photo_id}', function($staff_id, $photo_id) {
+
+    $staff = Staff::findOrFail($staff_id);
+    $photo = Photo::findorFail($photo_id);
+
+    $result = $staff->photos()->save($photo);
+    return evaluate($result);
+
+});
+
+Route::get('/unassign/{staff_id}/{photo_id}', function($staff_id, $photo_id) {
+
+    $staff = Staff::findOrFail($staff_id);
+    // $photo = Photo::findorFail($photo_id);
+
+    $result = $staff->photos()->whereId($photo_id)->update(['imageable_id'=>0, 'imageable_type'=>'']);
     return evaluate($result);
 
 });
