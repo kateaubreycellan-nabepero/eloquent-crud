@@ -30,3 +30,11 @@ Route::get('/create/{id}/{role_name}', function($id, $role_name){
     return $result ? true : false;
 
 });
+
+Route::get('/read/{id}', function($id) {
+
+    $user = User::findOrFail($id);
+
+    return $user->roles;
+
+});
