@@ -33,3 +33,14 @@ Route::get('/create/{id}', function($id) {
     return evaluate($result);
 
 });
+
+Route::get('/read/{id}', function($id) {
+
+    $staff = Staff::findOrFail($id);
+
+    foreach ($staff->photos as $photo)
+    {
+        return $photo->path;
+    }
+
+});
