@@ -58,3 +58,18 @@ Route::get('/update/{id}', function($id) {
     return false;
 
 });
+
+Route::get('/delete/{id}/{role_id}', function($id, $role_id) {
+
+    $user = User::findOrFail($id);
+
+    // $result = $user->roles()->delete();
+
+    foreach ($user->roles as $role)
+    {
+        $result = $role->where('id', $role_id)->delete();
+        return $result ? true : false;
+    }
+    return false;
+
+});
