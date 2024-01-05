@@ -44,3 +44,14 @@ Route::get('/read/{id}', function($id) {
     }
 
 });
+
+Route::get('/update/{id}/{name}', function($id, $name) {
+
+    $staff = Staff::findOrFail($id);
+
+    $photo = $staff->photos()->where('id', $id)->first();
+    $photo->path = $name;
+    $result = $photo->save();
+    return evaluate($result);
+
+});
