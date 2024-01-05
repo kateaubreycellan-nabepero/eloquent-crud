@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/create/{id}/{title}/{body}', function($id, $title, $body) {
+
+    $user = User::findOrFail($id);
+    $post = new Post(['title'=>$title, 'body'=>$body]);
+    $result = $user->posts()->save($post);
+    return $result ? true : false;
+
 });
