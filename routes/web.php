@@ -55,3 +55,12 @@ Route::get('/update/{id}/{name}', function($id, $name) {
     return evaluate($result);
 
 });
+
+Route::get('/delete/{id}/{photo_id}', function($id, $photo_id) {
+
+    $staff = Staff::findOrFail($id);
+
+    $result = $staff->photos()->where('id', $photo_id)->delete();
+    return evaluate($result);
+
+});
