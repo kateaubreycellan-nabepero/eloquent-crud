@@ -68,3 +68,15 @@ Route::get('/update/{post_id}', function($post_id) {
     // $post->tags()->sync([1,3]);
 
 });
+
+Route::get('/delete/{post_id}', function($post_id) {
+
+    $post = Post::findOrFail($post_id);
+
+    foreach($post->tags as $tag)
+    {
+        $result = $tag->where('id', 1)->delete();
+    }
+    return $result;
+
+});
